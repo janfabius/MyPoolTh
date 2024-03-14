@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -84,14 +85,13 @@ public class Activity2 extends AppCompatActivity {
         taskFutures.add(executorService.submit(new Task1(seconds)));
         taskFutures.add(executorService.submit(new Task2()));
         taskFutures.add(executorService.submit(new Task3()));
-        //taskFutures.add(executorService.submit(new Task4(0)));
+
+        // registro con valore di default anche se sotto Task3
+        taskFutures.add(executorService.submit(new Task4(0)));
+
         // Puoi aggiungere altri Task come desiderato
 
-        // Avvia il Task 4 con il valore predefinito
-        Future<?> futureTask4 = executorService.submit(new Task4(0)); // Valore predefinito
 
-        // Avvio dei Task e aggiunta dei Future alla lista
-        taskFutures.add(futureTask4);
 
         // Controllo dello stato di completamento dei Task in un thread separato
         new Thread(new Runnable() {
@@ -99,13 +99,13 @@ public class Activity2 extends AppCompatActivity {
             public void run() {
                 try {
                     // Attendi il completamento dei primi tre Task
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 4; i++) {
                         taskFutures.get(i).get();
                     }
 
                     // Attendi il completamento di entrambi i Task 3 e 4
-                    taskFutures.get(2).get(); // Task 3
-                    futureTask4.get(); // Task 4
+                   // taskFutures.get(2).get(); // Task 3
+                   // taskFutures.get(3); // Task 4
 
                     // Una volta completati tutti i Task, abilita i pulsanti o altro
                     runOnUiThread(new Runnable() {
@@ -211,16 +211,14 @@ public class Activity2 extends AppCompatActivity {
             }
 
 
-            // Ottenere un valore da passare al Task 4
-            final int valueForTask4 = 42; // Questo è un valore di esempio, puoi cambiare questo in base alla tua logica
-
-            Log.d("__Task3", "Value for Task4: " + valueForTask4); // Aggiungi questo log per controllare il valore ottenuto
+            // Ottenere un valore casuale da passare al Task 4
+            final int valueForTask4 = new Random().nextInt(100); // Genera un numero casuale compreso tra 0 e 99
 
             // Popola la grafica con il risultato
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    testo3.setText("Task 3 completato");
+                    testo3.setText("Task 3 completato con valore: "+valueForTask4);
                 }
             });
 

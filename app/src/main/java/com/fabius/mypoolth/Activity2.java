@@ -23,6 +23,8 @@ public class Activity2 extends AppCompatActivity {
 
     //Pool executor
     private ExecutorService executorService;
+
+    //Lista dei task
     private List<Future<?>> taskFutures;
 
     @Override
@@ -30,7 +32,7 @@ public class Activity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
 
-        //FIND
+        // FIND BY ID
         testo1 = findViewById(R.id.textView1);
         testo2 = findViewById(R.id.textView2);
         testo3 = findViewById(R.id.textView3);
@@ -44,7 +46,7 @@ public class Activity2 extends AppCompatActivity {
         button3.setVisibility(View.VISIBLE);
 
 
-        // Creazione di un ThreadPoolExecutor con un numero di thread pari a 2
+        // Creazione di un ThreadPoolExecutor con un numero di thread pari a 3
         executorService = Executors.newFixedThreadPool(3);
 
         // Creazione della lista per monitorare lo stato dei Task
@@ -85,7 +87,7 @@ public class Activity2 extends AppCompatActivity {
                     for (Future<?> future : taskFutures) {
                         future.get();
                     }
-                    // Una volta completati tutti i Task, abilita i pulsanti
+                    // Una volta completati tutti i Task, abilita i pulsanti o altro
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -136,6 +138,7 @@ public class Activity2 extends AppCompatActivity {
             // Simula un'elaborazione lunga
             try {
 
+
                 Thread.sleep(2000);
 
                 // Mostra un messaggio di "..."
@@ -157,6 +160,7 @@ public class Activity2 extends AppCompatActivity {
                 });
 
                 Thread.sleep(1000);
+
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

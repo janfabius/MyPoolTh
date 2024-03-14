@@ -245,6 +245,7 @@ public class Activity2 extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+
             // Popola la grafica con il risultato utilizzando il valore ottenuto dal Task 3
             runOnUiThread(new Runnable() {
                 @Override

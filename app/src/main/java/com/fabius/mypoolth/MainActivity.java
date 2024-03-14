@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         input = findViewById(R.id.editTextNumber);
 
         // Aggiungi un listener per gestire il click sul pulsante
-        // Aggiungi un listener per gestire il click sul pulsante
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

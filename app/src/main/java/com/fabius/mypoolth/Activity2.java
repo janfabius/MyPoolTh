@@ -2,6 +2,7 @@ package com.fabius.mypoolth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -71,8 +72,21 @@ public class Activity2 extends AppCompatActivity {
     }
 
     private void startTasks() {
+
+        // Ottieni il parametro dai dati dell'intent
+        Intent intent = getIntent();
+        int seconds = intent.getIntExtra("INPUT_VALUE", 2); // DEFAULT_VALUE è il valore predefinito se il parametro non è presente
+
+
+
+
+
+
         // Avvio dei Task e aggiunta dei Future alla lista
-        taskFutures.add(executorService.submit(new Task1()));
+
+        // task con parametri
+        taskFutures.add(executorService.submit(new Task1(seconds)));
+
         taskFutures.add(executorService.submit(new Task2()));
         taskFutures.add(executorService.submit(new Task3()));
 
@@ -110,11 +124,19 @@ public class Activity2 extends AppCompatActivity {
 
     // Classe per il Task 1
     private class Task1 implements Runnable {
+
+        private final int seconds; // Il parametro da passare
+
+        // Costruttore per inizializzare il parametro seconds
+        public Task1(int seconds) {
+            this.seconds = seconds;
+        }
+
         @Override
         public void run() {
             // Simula un'elaborazione lunga
             try {
-                Thread.sleep(2000);
+                Thread.sleep(seconds * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -123,7 +145,7 @@ public class Activity2 extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    testo1.setText("Task 1 completato");
+                    testo1.setText("Task 1 completato di "+seconds+" sec");
                 }
             });
 

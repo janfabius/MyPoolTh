@@ -18,7 +18,7 @@ import java.util.concurrent.Future;
 public class Activity2 extends AppCompatActivity {
 
     private TextView testo1, testo2, testo3;
-    private Button button1, button2;
+    private Button button1, button2, button3;
 
 
     //Pool executor
@@ -36,10 +36,12 @@ public class Activity2 extends AppCompatActivity {
         testo3 = findViewById(R.id.textView3);
         button1 = findViewById(R.id.buttonA);
         button2 = findViewById(R.id.buttonB);
+        button3 = findViewById(R.id.buttonC);
 
         // INIZ
         button1.setVisibility(View.INVISIBLE);
         button2.setVisibility(View.INVISIBLE);
+        button3.setVisibility(View.VISIBLE);
 
 
         // Creazione di un ThreadPoolExecutor con un numero di thread pari a 2
@@ -50,6 +52,19 @@ public class Activity2 extends AppCompatActivity {
 
         // Avvio dei Task
         startTasks();
+
+
+
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Chiudi l'executor service prima di passare alla nuova activity
+                executorService.shutdown();
+
+                // torno indietro
+                onBackPressed();
+            }
+        });
 
     }
 
